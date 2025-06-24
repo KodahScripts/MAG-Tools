@@ -184,4 +184,6 @@ function main(workbook: ExcelScript.Workbook) {
   const noMatchSheetData = [noMatchSheetHeader, ...noMatchRows];
   const noMatchSheet = new NewSheet(workbook, "No Match", noMatchSheetData);
   noMatchSheet.build();
+
+  workbook.getWorksheet("UPLOAD").setPosition(0);
 }
