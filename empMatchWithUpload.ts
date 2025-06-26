@@ -78,12 +78,24 @@ class BeneReport extends Report {
 
   getAllEmployees() {
     return this.data.map(row => {
+      let amount: number;
+
+      if(Number(row[this.netAmountCol])) {
+        amount = Number(row[this.netAmountCol]);
+      } else {
+        if(Number(row[this.debitAmountCol]) === 0) {
+          amount = -Number(row[this.creditAmountCol]);
+        } else {
+          amount = Number(row[this.debitAmountCol]);
+        }
+      }
+
       return {
         name: String(row[this.empNameCol]),
         ukgID: Number(row[this.ukgEmpIDCol]),
         gl: String(row[this.acctIDCol]),
         desc: String(row[this.acctNameCol]),
-        amount: Number(row[this.netAmountCol]) ? Number(row[this.netAmountCol]) : Number(row[this.debitAmountCol]) === 0 ? -Number(row[this.creditAmountCol]) : Number(row[this.debitAmountCol]),
+        amount,
         found: false
       }
     });
